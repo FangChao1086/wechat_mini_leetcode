@@ -170,7 +170,7 @@ class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         ListNode* dummy = new ListNode(0, head); // 虚拟头节点，处理删除头节点的情况
-        ListNode* fast = head;
+        ListNode* fast = dummy;
         ListNode* slow = dummy;
         
         // 快指针先走n步
@@ -179,15 +179,19 @@ public:
         }
         
         // 快慢指针同步移动，直到快指针到达末尾
-        while (fast != nullptr) {
+        while (fast-&gt;next != nullptr) {
             fast = fast-&gt;next;
             slow = slow-&gt;next;
         }
         
         // 删除倒数第n个节点
+        ListNode* toDelete = slow-&gt;next;
         slow-&gt;next = slow-&gt;next-&gt;next;
+        delete toDelete;
         
-        return dummy-&gt;next; // 返回真正的头节点
+        ListNode* result = dummy-&gt;next;
+        delete dummy;
+        return result;
     }
 };</pre>
                     </div>
@@ -197,7 +201,7 @@ public:
                 <div class="section complexity-section">
                     <h2>复杂度分析</h2>
                     <div class="complexity">
-                        <strong>时间O(L) 空间O(1) 其中L为链表长度</strong>
+                        <strong>时间O(L) 空间O(1)</strong>
                     </div>
                 </div>
             </div>
