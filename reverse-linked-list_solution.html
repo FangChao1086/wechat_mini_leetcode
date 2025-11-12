@@ -152,7 +152,7 @@
             <div class="content">
                 <div class="section">
                     <h2>解题思路 <span class="ai-badge">AI生成</span></h2>
-                    <p>使用三个指针，依次反转节点指向，最后返回新头节点。</p>
+                    <p>使用三个指针，依次反转每个节点的指向，最后返回新的头节点。</p>
                 </div>
                 
                 <div class="section code-section">
@@ -167,7 +167,7 @@ ListNode* reverseList(ListNode* head) {
         prev = curr;        // 移动prev
         curr = next;        // 移动curr
     }
-    return prev;  // 返回新头节点
+    return prev;  // 返回新的头节点
 }</pre>
                     </div>
                     <button class="copy-btn" onclick="copyCode()">📋 复制代码</button>
