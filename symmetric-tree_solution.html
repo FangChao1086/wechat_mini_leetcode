@@ -168,12 +168,10 @@ public:
     bool check(TreeNode* left, TreeNode* right) {
         // 两个节点都为空，对称
         if (!left &amp;&amp; !right) return true;
-        // 只有一个节点为空，不对称
-        if (!left || !right) return false;
-        // 节点值相等且子树镜像对称
-        return left-&gt;val == right-&gt;val 
-            &amp;&amp; check(left-&gt;left, right-&gt;right) 
-            &amp;&amp; check(left-&gt;right, right-&gt;left);
+        // 只有一个为空或值不相等，不对称
+        if (!left || !right || left-&gt;val != right-&gt;val) return false;
+        // 递归检查左子树的左节点与右子树的右节点，以及左子树的右节点与右子树的左节点
+        return check(left-&gt;left, right-&gt;right) &amp;&amp; check(left-&gt;right, right-&gt;left);
     }
 };</pre>
                     </div>
