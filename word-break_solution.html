@@ -169,7 +169,7 @@ public:
             for (const string&amp; word : wordDict) {
                 int len = word.length();
                 if (i &gt;= len &amp;&amp; s.substr(i - len, len) == word) {
-                    dp[i] = dp[i] || dp[i - len]; // 如果前i-len可拆分，则前i也可拆分
+                    dp[i] = dp[i] || dp[i - len]; // 如果前面部分可拆分且当前单词匹配
                 }
             }
         }
