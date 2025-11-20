@@ -152,23 +152,31 @@
             <div class="content">
                 <div class="section">
                     <h2>解题思路 <span class="ai-badge">AI生成</span></h2>
-                    <p>使用三个指针，依次反转每个节点的指向，最后返回新的头节点。</p>
+                    <p>使用三个指针，依次反转节点指向，最后返回新头节点。</p>
                 </div>
                 
                 <div class="section code-section">
                     <h2>C++ 代码实现</h2>
                     <div class="code-container">
-                        <pre class="code" id="code-content">// 迭代反转链表
-ListNode* reverseList(ListNode* head) {
-    ListNode *prev = nullptr, *curr = head, *next;
-    while (curr) {
-        next = curr-&gt;next;  // 保存下一个节点
-        curr-&gt;next = prev;  // 反转指向
-        prev = curr;        // 移动prev
-        curr = next;        // 移动curr
+                        <pre class="code" id="code-content">struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *prev = nullptr;    // 前驱节点初始化为空
+        ListNode *curr = head;       // 当前节点从头节点开始
+        while (curr) {
+            ListNode *nextTemp = curr-&gt;next;  // 临时保存下一个节点
+            curr-&gt;next = prev;       // 反转指针方向
+            prev = curr;             // 前驱指针后移
+            curr = nextTemp;         // 当前指针后移
+        }
+        return prev;                 // 返回新头节点
     }
-    return prev;  // 返回新的头节点
-}</pre>
+};</pre>
                     </div>
                     <button class="copy-btn" onclick="copyCode()">📋 复制代码</button>
                 </div>
