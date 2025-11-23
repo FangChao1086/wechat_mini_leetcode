@@ -163,15 +163,15 @@ public:
     vector&lt;vector&lt;int&gt;&gt; reconstructQueue(vector&lt;vector&lt;int&gt;&gt;&amp; people) {
         // 按身高降序，同身高按k值升序排序
         sort(people.begin(), people.end(), [](const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) {
-            return a[0] &gt; b[0] || (a[0] == b[0] &amp;&amp; a[1] &lt; b[1]);
+            return a[0] == b[0] ? a[1] &lt; b[1] : a[0] &gt; b[0];
         });
         
-        vector&lt;vector&lt;int&gt;&gt; result;
+        vector&lt;vector&lt;int&gt;&gt; res;
         // 按k值作为索引插入
-        for (const auto&amp; p : people) {
-            result.insert(result.begin() + p[1], p);
+        for (auto&amp; p : people) {
+            res.insert(res.begin() + p[1], p);
         }
-        return result;
+        return res;
     }
 };</pre>
                     </div>
