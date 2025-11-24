@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+    <html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="referrer" content="never">
+    <title>二叉树的直径 - AI解法</title>
+        <style>
+            /* 微信优化样式 - 完全内联 */
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { 
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                line-height: 1.6; 
+                color: #333;
+                background: #f5f5f5;
+                min-height: 100vh;
+                padding: 10px;
+                -webkit-text-size-adjust: 100%;
+            }
+            .container { 
+                max-width: 100%; 
+                margin: 0 auto;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                overflow: hidden;
+            }
+            .header { 
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px;
+                text-align: center;
+            }
+            .header h1 { 
+                font-size: 18px; 
+                margin-bottom: 8px;
+                font-weight: 600;
+            }
+            .difficulty { 
+                display: inline-block;
+                background: rgba(255,255,255,0.2);
+                padding: 4px 12px;
+                border-radius: 16px;
+                font-size: 12px;
+                margin: 3px;
+            }
+            .content { padding: 15px; }
+            .section { 
+                margin-bottom: 15px;
+                background: #f8f9fa;
+                padding: 15px;
+                border-radius: 6px;
+                border-left: 3px solid #667eea;
+            }
+            .section h2 { 
+                color: #667eea;
+                margin-bottom: 10px;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+            }
+            .section h2::before {
+                content: "💡";
+                margin-right: 6px;
+            }
+            .code-section h2::before { content: "🚀"; }
+            .complexity-section h2::before { content: "📊"; }
+            .code-container {
+                position: relative;
+                background: #1a202c;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+            .code { 
+                background: #1a202c;
+                color: #e2e8f0;
+                padding: 15px;
+                border-radius: 6px;
+                overflow-x: auto;
+                font-family: 'Courier New', Monaco, Menlo, monospace;
+                font-size: 12px;
+                line-height: 1.4;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                max-height: 400px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .complexity { 
+                background: #e8f4fd;
+                padding: 12px;
+                border-radius: 6px;
+                border-left: 3px solid #1890ff;
+            }
+            .footer { 
+                text-align: center; 
+                padding: 15px;
+                background: #f8f9fa;
+                color: #666;
+                font-size: 12px;
+                border-top: 1px solid #e9ecef;
+            }
+            .tag { 
+                display: inline-block;
+                background: rgba(255,255,255,0.2);
+                padding: 3px 8px;
+                border-radius: 12px;
+                font-size: 10px;
+                margin: 1px;
+            }
+            .ai-badge {
+                background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+                color: white;
+                padding: 3px 8px;
+                border-radius: 10px;
+                font-size: 10px;
+                margin-left: 8px;
+            }
+            .copy-btn {
+                background: #48bb78;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-top: 8px;
+                font-size: 11px;
+            }
+            .copy-btn:hover {
+                background: #38a169;
+            }
+            a {
+                color: #667eea;
+                text-decoration: none;
+            }
+            a:active {
+                color: #5a6fd8;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>二叉树的直径</h1>
+                <div class="difficulty">EASY</div>
+                <div style="margin-top: 10px;">
+                    <span class="tag">树</span><span class="tag">深度优先搜索</span><span class="tag">二叉树</span>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="section">
+                    <h2>解题思路 <span class="ai-badge">AI生成</span></h2>
+                    <p>递归计算左右子树深度，同时更新最大直径（左右深度之和）</p>
+                </div>
+                
+                <div class="section code-section">
+                    <h2>C++ 代码实现</h2>
+                    <div class="code-container">
+                        <pre class="code" id="code-content">class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int res = 0;
+        dfs(root, res);
+        return res;
+    }
+    
+    int dfs(TreeNode* node, int&amp; res) {
+        if (!node) return 0;
+        int left = dfs(node-&gt;left, res);   // 左子树深度
+        int right = dfs(node-&gt;right, res); // 右子树深度
+        res = max(res, left + right);      // 更新最大直径
+        return max(left, right) + 1;       // 返回当前子树深度
+    }
+};</pre>
+                    </div>
+                    <button class="copy-btn" onclick="copyCode()">📋 复制代码</button>
+                </div>
+                
+                <div class="section complexity-section">
+                    <h2>复杂度分析</h2>
+                    <div class="complexity">
+                        <strong>时间O(n) 空间O(h)</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>💡 本解法由AI生成，仅供参考学习</p>
+                <p>
+                    <a href="https://leetcode.cn/problems/diameter-of-binary-tree/" target="_blank">📖 查看LeetCode官方题目</a>
+                </p>
+            </div>
+        </div>
+
+        <script>
+            // 简化复制功能 - 微信兼容
+            function copyCode() {
+                const codeContent = document.getElementById('code-content');
+                const textArea = document.createElement('textarea');
+                textArea.value = codeContent.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    if (successful) {
+                        alert('代码已复制到剪贴板！');
+                    } else {
+                        alert('复制失败，请手动选择代码复制');
+                    }
+                } catch (err) {
+                    alert('复制失败，请手动选择代码复制');
+                }
+                document.body.removeChild(textArea);
+            }
+
+            // 微信环境检测
+            function isWeChat() {
+                return /MicroMessenger/i.test(navigator.userAgent);
+            }
+
+            // 页面加载完成
+            document.addEventListener('DOMContentLoaded', function() {
+                if (isWeChat()) {
+                    console.log('微信浏览器环境');
+                }
+            });
+        </script>
+    </body>
+    </html>
