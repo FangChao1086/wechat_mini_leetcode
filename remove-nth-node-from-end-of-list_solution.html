@@ -152,45 +152,33 @@
             <div class="content">
                 <div class="section">
                     <h2>解题思路 <span class="ai-badge">AI生成</span></h2>
-                    <p>双指针，快指针先走n步，然后快慢指针同步移动直到快指针到末尾</p>
+                    <p>使用双指针，快指针先走n步，然后快慢指针同时移动直到快指针到末尾，此时慢指针指向倒数第n个节点的前驱。</p>
                 </div>
                 
                 <div class="section code-section">
                     <h2>C++ 代码实现</h2>
                     <div class="code-container">
-                        <pre class="code" id="code-content">// 定义链表节点
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-class Solution {
+                        <pre class="code" id="code-content">class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
-        ListNode* dummy = new ListNode(0, head); // 虚拟头节点，处理删除头节点的情况
+        ListNode* dummy = new ListNode(0, head); // 虚拟头节点，简化删除头节点的情况
         ListNode* fast = dummy;
         ListNode* slow = dummy;
-        
         // 快指针先走n步
-        for (int i = 0; i &lt; n; i++) {
+        for (int i = 0; i &lt; n; ++i) {
             fast = fast-&gt;next;
         }
-        
-        // 快慢指针同步移动，直到快指针到达末尾
+        // 快慢指针同时移动，直到快指针到达末尾
         while (fast-&gt;next != nullptr) {
             fast = fast-&gt;next;
             slow = slow-&gt;next;
         }
-        
         // 删除倒数第n个节点
         ListNode* toDelete = slow-&gt;next;
         slow-&gt;next = slow-&gt;next-&gt;next;
-        delete toDelete;
-        
+        delete toDelete; // 释放内存
         ListNode* result = dummy-&gt;next;
-        delete dummy;
+        delete dummy; // 释放虚拟头节点
         return result;
     }
 };</pre>
