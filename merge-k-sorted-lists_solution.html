@@ -152,7 +152,7 @@
             <div class="content">
                 <div class="section">
                     <h2>解题思路 <span class="ai-badge">AI生成</span></h2>
-                    <p>使用优先队列（最小堆）存储所有链表当前节点，每次取出最小值合并到结果链表。</p>
+                    <p>使用优先队列（最小堆）存储所有链表当前节点，每次取出最小值合并。</p>
                 </div>
                 
                 <div class="section code-section">
@@ -168,35 +168,27 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
-struct Compare {
-    bool operator()(ListNode* a, ListNode* b) {
-        return a-&gt;val &gt; b-&gt;val;  // 最小堆
-    }
-};
 class Solution {
 public:
     ListNode* mergeKLists(vector&lt;ListNode*&gt;&amp; lists) {
-        priority_queue&lt;ListNode*, vector&lt;ListNode*&gt;, Compare&gt; pq;
+        // 自定义比较函数，用于优先队列（最小堆）
+        auto cmp = [](ListNode* a, ListNode* b) { return a-&gt;val &gt; b-&gt;val; };
+        priority_queue&lt;ListNode*, vector&lt;ListNode*&gt;, decltype(cmp)&gt; pq(cmp);
         
         // 将所有链表的头节点加入优先队列
         for (auto list : lists) {
             if (list) pq.push(list);
         }
         
-        ListNode dummy(0);  // 哑节点简化操作
-        ListNode* curr = &amp;dummy;
+        ListNode dummy(0); // 虚拟头节点简化操作
+        ListNode* cur = &amp;dummy;
         
         while (!pq.empty()) {
-            ListNode* minNode = pq.top();
+            ListNode* node = pq.top(); // 取出当前最小节点
             pq.pop();
-            
-            curr-&gt;next = minNode;  // 将最小节点连接到结果链表
-            curr = curr-&gt;next;
-            
-            // 如果该链表还有后续节点，加入优先队列
-            if (minNode-&gt;next) {
-                pq.push(minNode-&gt;next);
-            }
+            cur-&gt;next = node; // 连接到结果链表
+            cur = cur-&gt;next;
+            if (node-&gt;next) pq.push(node-&gt;next); // 将该节点的下一个加入队列
         }
         
         return dummy.next;
