@@ -152,7 +152,7 @@
             <div class="content">
                 <div class="section">
                     <h2>解题思路 <span class="ai-badge">AI生成</span></h2>
-                    <p>动态规划，dp[i][j]表示word1前i个字符转成word2前j个字符的最小操作数</p>
+                    <p>动态规划，dp[i][j]表示word1前i个字符转换为word2前j个字符的最小操作数，通过增删改三种操作转移。</p>
                 </div>
                 
                 <div class="section code-section">
@@ -162,19 +162,18 @@
 public:
     int minDistance(string word1, string word2) {
         int m = word1.size(), n = word2.size();
-        vector&lt;vector&lt;int&gt;&gt; dp(m+1, vector&lt;int&gt;(n+1, 0));
-        
-        // 初始化边界条件
-        for(int i = 0; i &lt;= m; i++) dp[i][0] = i;  // word1转成空串需要删除i次
-        for(int j = 0; j &lt;= n; j++) dp[0][j] = j;  // 空串转成word2需要插入j次
-        
-        for(int i = 1; i &lt;= m; i++) {
-            for(int j = 1; j &lt;= n; j++) {
-                if(word1[i-1] == word2[j-1]) {
-                    dp[i][j] = dp[i-1][j-1];  // 字符相同，无需操作
+        vector&lt;vector&lt;int&gt;&gt; dp(m + 1, vector&lt;int&gt;(n + 1, 0));
+        // 初始化边界：空串转换需要删除或插入所有字符
+        for (int i = 0; i &lt;= m; i++) dp[i][0] = i; // 删除i次
+        for (int j = 0; j &lt;= n; j++) dp[0][j] = j; // 插入j次
+        // 状态转移
+        for (int i = 1; i &lt;= m; i++) {
+            for (int j = 1; j &lt;= n; j++) {
+                if (word1[i - 1] == word2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1]; // 字符相同，无需操作
                 } else {
-                    // 三种操作取最小值：插入、删除、替换
-                    dp[i][j] = min({dp[i][j-1], dp[i-1][j], dp[i-1][j-1]}) + 1;
+                    // 分别对应：替换、删除word1字符、插入word2字符
+                    dp[i][j] = min(dp[i - 1][j - 1], min(dp[i - 1][j], dp[i][j - 1])) + 1;
                 }
             }
         }
